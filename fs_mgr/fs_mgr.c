@@ -551,10 +551,16 @@ int fs_mgr_mount_all(struct fstab *fstab, int mount_mode)
     int mret = -1;
     int mount_errno = 0;
     int attempted_idx = -1;
+    char propbuf[PROPERTY_VALUE_MAX];
+    bool is_ffbm = false;
 
     if (!fstab) {
         return -1;
     }
+    /**get boot mode*/
+    property_get("ro.bootmode", propbuf, "");
+    if (strncmp(propbuf, "ffbm", 4) == 0)
+        is_ffbm = true;
 
     for (i = 0; i < fstab->num_entries; i++) {
         /* Don't mount entries that are managed by vold or not for the mount mode*/
