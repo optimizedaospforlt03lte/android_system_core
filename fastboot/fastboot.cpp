@@ -976,8 +976,8 @@ static std::string verify_slot(Transport* transport, const std::string& slot) {
    return verify_slot(transport, slot, true);
 }
 
-static void do_for_partition(Transport* transport, const char *part, const char *slot,
-                             const std::function<void(const std::string&)>& func, bool force_slot) {
+static void do_for_partition(Transport* transport, const std::string& part, const std::string& slot,
+                             std::function<void(const std::string&)> func, bool force_slot) {
     std::string has_slot;
     std::string current_slot;
 
@@ -1009,9 +1009,8 @@ static void do_for_partition(Transport* transport, const char *part, const char 
  * partition names. If force_slot is true, it will fail if a slot is specified, and the given
  * partition does not support slots.
  */
-
-static void do_for_partitions(Transport* transport, const char *part, const char *slot,
-                              const std::function<void(const std::string&)>& func, bool force_slot) {
+static void do_for_partitions(Transport* transport, const std::string& part, const std::string& slot,
+                              std::function<void(const std::string&)> func, bool force_slot) {
     std::string has_slot;
 
     if (slot == "all") {

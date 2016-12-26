@@ -497,6 +497,10 @@ on post-fs-data
     # won't work.
     # Set indication (checked by vold) that we have finished this action
     #setprop vold.post_fs_data_done 1
+    
+    # Run sysinit
+    start sysinit
+
 
 on boot
     # basic network init
@@ -589,6 +593,12 @@ on boot
     setprop net.tcp.default_init_rwnd 60
 
     class_start core
+    
+    # sysinit (/system/etc/init.d)
+	service sysinit /system/bin/sysinit
+    user root
+    oneshot
+    disabled
 
 on nonencrypted
     # A/B update verifier that marks a successful boot.
